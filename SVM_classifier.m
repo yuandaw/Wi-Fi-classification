@@ -1,13 +1,17 @@
 class = 7 %number of classes
-sample = 400 %sample number for each class
-proportion = 0.1 %proportion of training set
-features=mobile(:,1:100);%features
-classlabel=mobile(:,101);%labels
-m(1,1:400) = randperm(400);%generating training&testing set randomly
+sample = 200 %sample number for each class
+proportion = 0.7 %proportion of training set for each class
+features=mobile(:,1:200);%features
+classlabel=mobile(:,201);%labels
+m(1,1:sample) = randperm(sample);%generating training&testing set randomly
+
+n=[]
+
 for i = 1:class
     n(1,sample*proportion*(i-1)+1:sample*proportion*i) = m(1,1:sample*proportion)+sample*(i-1);
 end
 
+l=[]
 
 for i = 1:class
     l(1,sample*(1-proportion)*(i-1)+1:sample*(1-proportion)*i) = m(1,sample*proportion+1:sample)+sample*(i-1);
@@ -41,5 +45,3 @@ compare_test = (test_label == predict_test_label);
 accuracy_test = sum(compare_test)/size(test_label,1)*100;
 fprintf('testing set accuracy：%f\n',accuracy_test)
 
-%%you must clear workspace and reload the data file when you change the
-%%proportion of training set
